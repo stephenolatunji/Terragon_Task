@@ -47,6 +47,30 @@ app.route('/users')
         });
     });
 
+app.route('/users/:userId')
+    .delete((req, res) => {
+        User.deleteOne({ id: req.params.userId }, (err) => {
+            if (err) {
+                res.send(err)
+            } else {
+                res.send('user has been deleted');
+            }
+        });
+    })
+    .get((req, res) => {
+        User.findOne({ id: req.params.userId }, (err, foundUser) => {
+            if (foundUser) {
+                res.send(foundUser);
+            } else {
+                res.send('User Not Found!')
+            }
+        });
+    });
+
+
+app.listen(port, () => {
+    console.log(`Server started on port ${port}`);
+})
 
 
 
